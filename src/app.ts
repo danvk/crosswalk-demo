@@ -16,6 +16,7 @@ app.use('/docs', swaggerUI.serve, swaggerUI.setup(apiSpecToOpenApi(apiSchema)));
 const typedRouter = new TypedRouter<API>(app, apiSchema);
 
 movies.register(typedRouter);
+typedRouter.checkComplete();
 
 app.listen(4567, () => {
   console.log(`App is running at http://localhost:4567`);
