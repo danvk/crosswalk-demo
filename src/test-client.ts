@@ -1,4 +1,4 @@
-import { apiUrlMaker, typedApi } from "typed-router";
+import { apiUrlMaker, typedApi } from "crosswalk";
 
 import { API } from "./api";
 
@@ -26,4 +26,6 @@ const getMovieUrl = urlMaker('/movies/:movieId');
   });
 
   console.log(newMovie.id);
-})();
+})().catch(e => {
+  console.error(e);
+});

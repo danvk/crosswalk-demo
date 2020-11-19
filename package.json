@@ -14,8 +14,8 @@
     "typescript-json-schema": "^0.43.0"
   },
   "dependencies": {
+    "crosswalk": "^1.0.2",
     "express": "^4.17.1",
-    "swagger-ui-express": "^4.1.4",
-    "typed-router": "../typed-router"
+    "swagger-ui-express": "^4.1.4"
   }
 }

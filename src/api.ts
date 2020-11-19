@@ -1,5 +1,5 @@
 // TODO: put these under a nicer path
-import type { Endpoint, GetEndpoint } from "typed-router/dist/api-spec";
+import type { Endpoint, GetEndpoint } from "crosswalk/dist/api-spec";
 
 export interface Actor {
   id: string;

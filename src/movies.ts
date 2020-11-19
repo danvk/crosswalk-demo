@@ -1,4 +1,4 @@
-import { HTTPError, TypedRouter } from 'typed-router';
+import { HTTPError, TypedRouter } from 'crosswalk';
 
 import { API, Actor, Movie } from './api';
 
@@ -37,6 +37,16 @@ const MOVIE_DB: Movie[] = [
   }
 ]
 
+// Defining domain-specific helpers like this using HTTPError can greatly
+// streamline the implementation of your request handlers.
+function getMovieOr404(movieId: string) {
+  const movie = MOVIE_DB.find(m => m.id === movieId);
+  if (!movie) {
+    throw new HTTPError(404, `No such movie ${movieId}`);
+  }
+  return movie;
+}
+
 export function register(router: TypedRouter<API>) {
   router.get('/movies', async () => ({movies: MOVIE_DB}));
 
@@ -62,10 +72,38 @@ export function register(router: TypedRouter<API>) {
   });
 
   router.get('/movies/:movieId', async ({movieId}) => {
-    const movie = MOVIE_DB.find(m => m.id === movieId);
-    if (!movie) {
-      throw new HTTPError(404, `No such movie ${movieId}`);
+    return getMovieOr404(movieId);
+  });
+
+  router.get('/movies/:movieId/actors', async ({movieId}) => {
+    const movie = getMovieOr404(movieId);
+    return movie.cast;
+  });
+
+  router.registerEndpoint('patch', '/movies/:movieId', async ({movieId}, body) => {
+    const movie = getMovieOr404(movieId);
+    if (body.castActorIds) {
+      throw new HTTPError(501, 'updating castActorIds is not implemented.');
+    }
+    for (const prop of ['plotSummary', 'title', 'revenueUsd', 'year'] as const) {
+      const v = body[prop];
+      if (v) {
+        (movie as any)[prop] = v;
+      }
     }
     return movie;
+  });
+
+  router.get('/movies/:movieId/actors/:actorId', async ({movieId, actorId}) => {
+    const movie = getMovieOr404(movieId);
+    const actor = movie.cast.find(a => a.id === actorId);
+    if (!actor) {
+      throw new HTTPError(404, `Could not find actor ${actorId} in ${movieId}`);
+    }
+    return actor;
+  });
+
+  router.registerEndpoint('delete', '/movies/:movieId/actors/:actorId', async ({movieId, actorId}) => {
+    throw new HTTPError(501, 'DELETE endpoint not yet implemented');
   });
 }

@@ -2,7 +2,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import * as fs from 'fs';
 import swaggerUI from 'swagger-ui-express';
-import {TypedRouter, apiSpecToOpenApi} from 'typed-router';
+import {TypedRouter, apiSpecToOpenApi} from 'crosswalk';
 
 import {API} from './api';
 import * as movies from './movies';
