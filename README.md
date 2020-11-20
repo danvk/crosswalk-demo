@@ -5,7 +5,7 @@ Demo of [crosswalk][1], a safe router for Express and TypeScript.
 Quickstart:
 
     yarn
-    yarn ts-node src/app.ts
+    yarn start
 
 Then visit <http://localhost:4567/docs> to explore the API or try it on the
 command line (here using [httpie][]):

@@ -19,5 +19,7 @@ movies.register(typedRouter);
 typedRouter.assertAllRoutesRegistered();
 
 app.listen(4567, () => {
-  console.log(`App is running at http://localhost:4567`);
+  console.log(
+    `App is running at http://localhost:4567. Try visiting http://localhost:4567/docs`
+  );
 });
